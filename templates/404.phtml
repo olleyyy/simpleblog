@@ -1,0 +1,26 @@
+<?php
+/* @var string $title */
+?>
+
+<style>
+    .title{
+        color: blueviolet;
+    }
+    .content{
+        color: cornflowerblue;
+        background: cornsilk;
+    }
+</style>
+
+<h1><?= $title; ?></h1>
+<div class="title">Add your handler</div>
+
+<div class="content">
+    <pre>
+        <code lang="php">
+            $router->get('/', function () {
+                echo 'homepage';
+            });
+        </code>
+    </pre>
+</div>

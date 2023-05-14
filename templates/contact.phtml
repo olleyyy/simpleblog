@@ -1,0 +1,11 @@
+<?php
+/* @var string $name */
+?>
+<h2>Contact form - <?= $name?></h2>
+<form action="/contact" method="post">
+    <label for="name">Name</label>
+    <input name="name" type="text" />
+    <label for="message">Message</label>
+    <input name="message" type="text" />
+    <button type="submit">Submit</button>
+</form>

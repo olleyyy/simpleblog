@@ -10,7 +10,7 @@ class Router
     private const METHOD_GET = 'GET';
     private const METHOD_POST = 'POST';
 
-    public function get(string $path, callable|string $handler): void
+    public function get(string $path, callable|string|array $handler): void
     {
         $this->addHandler(self::METHOD_GET, $path, $handler);
     }
@@ -20,7 +20,8 @@ class Router
         $this->addHandler(self::METHOD_POST, $path, $handler);
     }
 
-    public function addNotFoundHandler($handler) {
+    public function addNotFoundHandler($handler)
+    {
         $this->notFoundHanlder = $handler;
     }
 
@@ -32,8 +33,19 @@ class Router
 
         $callback = null;
         foreach ($this->handlers as $handler) {
-            if($handler['path'] === $requestPath && $method === $handler['method']) {
+            if ($handler['path'] === $requestPath && $method === $handler['method']) {
                 $callback = $handler['handler'];
+            }
+        }
+
+        if (is_string($callback)) {
+            $parts = explode('::', $callback);
+            if (is_array($parts)) {
+                $className = array_shift($parts);
+                $handler = new $className;
+
+                $method = array_shift($parts);
+                $callback = [$handler, $method];
             }
         }
 
